@@ -1,0 +1,384 @@
+{% load bootstrap4 %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    {% bootstrap_css %}
+    {% bootstrap_jquery %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    {% block content %}
+        <div class="container">
+        <h2>목록</h2>
+            <form action="{% url 'blog:map_all' %}" method="get" class="form-inline">
+                <input type="text" class="form-control mr-2" name="q" value="{{ request.GET.q }}" />
+                <input type="submit" value="검색" class="btn btn-danger" />
+            </form>
+
+
+            <br/><br/>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>설치지점</th>
+                            <th>설치주소</th>
+                            <th>급속충전</th>
+                            <th>완속충전</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object_list %}
+                            {% for CarCharger in object_list %}
+                            <tr>
+                                <td> <a href="{{CarCharger.get_absolute_url}}">{{CarCharger.area}}</a></td>
+                                <td> {{CarCharger.address}} </td>
+                                <td> {{CarCharger.spCharger}} </td>
+                                <td> {{CarCharger.charger}} </td>
+                            </tr>
+                                <p>{{CarCharger.description}}</p>
+                            {% endfor %}
+                        {% elif search_term %}
+                            <b><i>Search Word({{ search_term }}) Not Found !</i></b>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <!-- 이전페이지 -->
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" data-page="{{ page_obj.previous_page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.previous_page_number}}{{ page_number }}">이전</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                    </li>
+                    {% endif %}
+                    <!-- 페이지리스트 -->
+                    {% for page_number in page_obj.paginator.page_range %}
+                    {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %}
+                        {% if page_number == page_obj.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" data-page="{{ page_obj.page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.page_number}}{{ page_number }}">{{ page_number }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" data-page="{{ page_obj.page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.page_number}}{{ page_number }}">{{ page_number }}</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    <!-- 다음페이지 -->
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" data-page="{{ page_obj.next_page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.next_page_number}}{{ page_number }}">다음</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+    {% endblock %}
+</body>
+</html>
+
+
+<!--            <script type='text/javascript'>-->
+<!--                $(document).ready(function(){-->
+<!--                    $(".page-link").on('click', function() {-->
+<!--                        $("#page").val($(this).data("page"));-->
+<!--                        $("#searchForm").submit();-->
+<!--                    });-->
+
+<!--                    $("#btn_search").on('click', function() {-->
+<!--                        $("#kw").val($(".kw").val());-->
+<!--                        $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.-->
+<!--                        $("#searchForm").submit();-->
+<!--                    });-->
+<!--                });-->
+<!--            </script>-->
+
+<!--        <div class="row justify-content-end my-3">-->
+<!--            <div class="col-4 input-group">-->
+<!--                <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">-->
+<!--                <div class="input-group-append">-->
+<!--                    <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <form id="searchForm" method="get" action="{% url 'blog:map_all' %}">-->
+<!--            <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">-->
+<!--            <input type="hidden" id="page" name="page" value="{{ page }}">-->
+<!--        </form>-->
+<!--        <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination justify-content-center">-->
+<!--            &lt;!&ndash; 이전페이지 &ndash;&gt;-->
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" data-page="{{ question_list.next_page_number }}" href="?&page={{ page_number }}">이전</a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            &lt;!&ndash; 페이지리스트 &ndash;&gt;-->
+<!--            {% for page_number in page_obj.paginator.page_range %}-->
+<!--            {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %}-->
+<!--                {% if page_number == page_obj.number %}-->
+<!--                <li class="page-item active" aria-current="page">-->
+<!--                    <a class="page-link" data-page="{{ question_list.next_page_number }}" href="?&page={{ page_number }}">{{ page_number }}</a>-->
+<!--                </li>-->
+<!--                {% else %}-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" data-page="{{ question_list.next_page_number }}" href="?&page={{ page_number }}">{{ page_number }}</a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
+<!--            &lt;!&ndash; 다음페이지 &ndash;&gt;-->
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" data-page="{{ question_list.next_page_number }}" href="?&page={{ page_number }}">다음</a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--            <script type='text/javascript'>-->
+<!--            $(document).ready(function(){-->
+<!--                $(".page-link").on('click', function() {-->
+<!--                    $("#page").val($(this).data("page"));-->
+<!--                    $("#searchForm").submit();-->
+<!--                });-->
+
+<!--                $("#btn_search").on('click', function() {-->
+<!--                    $("#kw").val($(".kw").val());-->
+<!--                    $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.-->
+<!--                    $("#searchForm").submit();-->
+<!--                });-->
+<!--            });-->
+<!--            </script>-->
+<!--            <form  method="get" action=".">-->
+<!--                <input type="text" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">-->
+<!--                <input type="submit" value="검색" class="btn btn-danger" />-->
+<!--            </form>-->
+<!--            <div class="row justify-content-end my-3">-->
+<!--                <div class="col-4 input-group">-->
+<!--                    <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        <form action="." method="get" class="form-inline" >-->
+<!--            <input type="text" class="form-control mr-2" name="q" value="{{ request.GET.q }}" />-->
+
+<!--            <input type="submit" value="검색" class="btn btn-danger" />-->
+<!--        </form>-->
+<!--        <form action="{% url 'blog:map_all' %}" method="get" class="form-inline">-->
+<!--            <input type="text" class="form-control mr-2" name="q" value="{{ request.GET.q }}" />-->
+
+<!--            <input type="submit" value="검색" class="btn btn-danger" />-->
+<!--        </form>-->
+<!--        <form action="." method="post">{% csrf_token %}-->
+<!--            {{form.as_table}}-->
+<!--            <input type="submit" value="전송" class="btn btn-primary btn-sm">-->
+<!--        </form>-->
+
+
+
+<!--        <div class="row">-->
+<!--            {% if object_list %}-->
+<!--                {% for CarCharger in object_list %}-->
+<!--                    <a href="{% url 'blog:map_detail' CarCharger.slug %}" class="text-dark">{{ CarCharger.address }}</a>-->
+<!--                        <p>{{ CarCharger.description}}</p>-->
+<!--                {% endfor %}&ndash;&gt;-->
+<!--            {% elif search_term %}&ndash;&gt;-->
+<!--                <b><i>Search Word({{ q }}) Not Found !</i></b>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+
+
+
+<!--<div class="container">-->
+<!--<h2>목록</h2>-->
+<!--<br>-->
+<!--    <table class="table table-striped">-->
+<!--        <tbody>-->
+<!--        {% for CarCharger in maps %} {# views.py와 연동 #}-->
+<!--        <tr>-->
+<!--            <td> <a href="{{CarCharger.get_absolute_url}}">{{CarCharger.area}}</a></td>-->
+<!--            <td> {{CarCharger.address}} </td>-->
+<!--            <td> {{CarCharger.spCharger}} </td>-->
+<!--            <td> {{CarCharger.charger}} </td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+<!--    <span>-->
+<!--        {# 페이징 처리!! #}-->
+<!--        {# 전체적인 블로그의 개수와 내용들의 데이터를 받아와 #}-->
+<!--        {# 받아온 데이터를 기반으로 페이징 처리 #}-->
+<!--        {% if page_obj.has_previous %}-->
+<!--            <a href="?page={{page_obj.previous_page_number}}">PreviousPage</a>-->
+<!--        {% endif %}-->
+<!--            Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}-->
+<!--        {% if page_obj.has_next %}-->
+<!--            <a href="?page={{page_obj.next_page_number}}">NextPage</a>-->
+<!--        {% endif %}-->
+<!--        {# 결과 값 Page 1 of 5 NextPage #}-->
+<!--    </span>-->
+<!--위에거 사용함-->
+
+
+
+<!--        <form action="{% url 'blog:map_all' %}" method="get" class="form-inline">-->
+<!--            <input type="text" class="form-control mr-2" name="q" value="{{ request.GET.q }}" />-->
+<!--            <input type="submit" value="검색" class="btn btn-danger" />-->
+<!--        </form>-->
+<!--</nav>-->
+<!--{% if is_paginated %}-->
+<!--<ul class="pagination">-->
+<!--    {% if page_obj.has_previous %}-->
+<!--    <li class="page-item">-->
+<!--        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"-->
+<!--            tabindex="-1">이전</a>-->
+<!--    </li>-->
+<!--    {% else %}-->
+<!--    <li class="page-item disabled">-->
+<!--        <a class="page-link" href="#" tabindex="-1">이전</a>-->
+<!--    </li>-->
+<!--    {% endif %}-->
+
+
+
+<!--    {% for page in page_range %}-->
+<!--    <li class="page-item {% if page == page_obj.number %} activate {% endif %}">-->
+<!--        <a class="page-link" href="?page={{ page }}">{{ page }}</a>-->
+<!--    </li>-->
+<!--    {% endfor %}-->
+
+
+
+<!--    {% if page_obj.has_next %}-->
+<!--    <li class="page-item">-->
+<!--        <a class="page-link"-->
+<!--            href="?page={{ page_obj.next_page_number }}">다음</a>-->
+<!--    </li>-->
+<!--    {% else %}-->
+<!--    <li class="page-item disabled">-->
+<!--        <a class="page-link" href="#">다음</a>-->
+<!--    </li>-->
+<!--    {% endif %}-->
+<!--</ul>-->
+<!--{% endif %}-->
+
+
+
+<!--    </div>-->
+<!--    <div id="paging">-->
+<!--        <ul class="pagination justify-content-center" style="margin-top: 2rem;">-->
+<!--            &lt;!&ndash; 이전페이지 &ndash;&gt;-->
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?&page={{ page_obj.previous_page_number }}">이전</a>-->
+<!--                &lt;!&ndash; href로 뎁스 설정 &ndash;&gt;-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            &lt;!&ndash; 페이지리스트 &ndash;&gt;-->
+<!--            {% for page_number in page_obj.paginator.page_range %}-->
+<!--            {% if page_number == page_obj.number %}-->
+<!--            <li class="page-item active" aria-current="page">-->
+<!--                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
+<!--            &lt;!&ndash; 다음페이지 &ndash;&gt;-->
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?&page={{ page_obj.next_page_number }}">다음</a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--<div>-->
+<!--    <ul class="pagination justify-content-center">-->
+<!--        &lt;!&ndash; 이전페이지 &ndash;&gt;-->
+<!--        {% if page_obj.has_previous %}-->
+<!--        <li class="page-item">-->
+<!--            <a class="page-link" href="?&page={{ page_obj.previous_page_number }}">이전</a>-->
+<!--            &lt;!&ndash; href로 뎁스 설정 &ndash;&gt;-->
+<!--        </li>-->
+<!--        {% else %}-->
+<!--        <li class="page-item disabled">-->
+<!--            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>-->
+<!--        </li>-->
+<!--        {% endif %}-->
+<!--        &lt;!&ndash; 페이지리스트 &ndash;&gt;-->
+<!--        {% for page_number in page_obj.paginator.page_range %}-->
+<!--        {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}-->
+<!--        <li class="page-item active" aria-current="page">-->
+<!--            <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>-->
+<!--        </li>-->
+<!--        {% else %}-->
+<!--        <li class="page-item">-->
+<!--            <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>-->
+<!--        </li>-->
+<!--        {% endif %}-->
+<!--        {% endfor %}-->
+<!--        &lt;!&ndash; 다음페이지 &ndash;&gt;-->
+<!--        {% if page_obj.has_next %}-->
+<!--        <li class="page-item">-->
+<!--            <a class="page-link" href="?&page={{ page_obj.next_page_number }}">다음</a>-->
+<!--        </li>-->
+<!--        {% else %}-->
+<!--        <li class="page-item disabled">-->
+<!--            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>-->
+<!--        </li>-->
+<!--        {% endif %}-->
+<!--    </ul>-->
+<!--</div>-->
+
+
+<!--<div>-->
+<!--    <span>-->
+<!--        {# 페이징 처리!! #}-->
+<!--        {# 전체적인 블로그의 개수와 내용들의 데이터를 받아와 #}-->
+<!--        {# 받아온 데이터를 기반으로 페이징 처리 #}-->
+<!--        {% if page_obj.has_previous %}-->
+<!--            <a href="?page={{page_obj.previous_page_number}}">PreviousPage</a>-->
+<!--        {% endif %}-->
+<!--            Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}-->
+<!--        {% if page_obj.has_next %}-->
+<!--            <a href="?page={{page_obj.next_page_number}}">NextPage</a>-->
+<!--        {% endif %}-->
+<!--        {# 결과 값 Page 1 of 5 NextPage #}-->
+<!--    </span>-->
+<!--</div>-->

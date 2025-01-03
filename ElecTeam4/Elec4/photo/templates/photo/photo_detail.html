@@ -1,0 +1,175 @@
+<html>
+{% extends 'Nav.html' %}
+{% load static %}
+
+<!--<link rel="stylesheet" href="{% static 'css/photolo.css'%}">-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+{% block extra-style %}
+    <style type="text/css">
+
+     body{
+        background:radial-gradient(200% 100% at bottom center,#F7F7B6,#E96F92,#75517D,#1B2947);
+        background:radial-gradient(220% 105% at top center,#1B2947 10%,#75517D 40%,#E96F92 65%,#F7F7B6);
+        background-attachment:fixed;
+    }
+    .mainMenu{
+        position: fixed;
+    }
+
+    .blog {
+            margin-top : 200px;
+            max-width: 1900px;
+            max-height: 1500px;
+    }
+
+    .photo-dis {
+        position: bottom-center;
+        bottom-bottom:0;
+        width: 50%;
+        margin: auto;
+        font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+        font-size: 16px;
+    }
+
+    /*photolo.css 영역*/
+        *, *:after, *:before {
+        box-sizing: border-box;
+    }
+
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 700px;
+        flex-shrink: 0;
+        flex-grow: 0;
+        max-width: 100%;
+        background-color: #FFF;
+        box-shadow: 0 5px 10px 0 rgba(#000, .15);
+        border-radius: 30px;
+        overflow: hidden;
+        margin-left: 310px;
+    }
+
+    .card-img {
+        padding-bottom: 5px;
+        position: relative;
+        bottom-bottom:0;
+        img {
+            position: absolute;
+            width: 100%;
+        }
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        line-height: 1.33;
+        font-weight: 700;
+    }
+
+    .card-intro {
+        margin-top: .75rem;
+        line-height: 1.5;
+        font-size: 16px;
+    }
+
+    .container {
+        position: absolute;
+        top: 0;
+        left: 250;
+        right: 0;
+        bottom: 0;
+        width: 1500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+    }
+</style>
+{% endblock %}
+
+<body>
+{% block content %}
+
+<div class="container">
+    <div style="padding-right:300px">
+  <div class="card">
+        <div class="card-img">
+            <a href="{{ object.image.url }}">
+                <img src="{{ object.image.url }}" style="width: 100%;">
+            </a>
+        </div>
+        <div class="card-body">
+              <h2 class="card-title">
+                  <a href="{% url 'photo:album_detail' object.album.id %}">
+                      {{ object.album.name }}
+                  </a>
+              </h2>
+              <h2 class="card-title">
+                {{ object.title }} ({{ object.country }}) - {{ object.standard }}
+              </h2>
+
+              <p class="card-intro">
+                  충전 타입 (급속) : {{ object.raptype }}
+                  <br>
+                  충전 타입 (완속) : {{ object.sltype }}
+                  <br>
+                  출시가 : {{ object.price }}만 원
+                  <br>
+                  연비 : {{ object.efficiency }}
+                  <br>
+                  비고 : {{ object.description }}
+                  <br>
+              </p>
+        </div>
+  </div>
+</div>
+
+<div class ="photo-dis">
+    <br><br><br><br><br><br><br><br>
+    <div id="disqus_thread"></div>
+</div>
+{% endblock %}
+
+{% block extra-script %}
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION
+*  BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT:
+*  https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+    this.page.identifier = '{{ disqus_id }}';
+    this.page.url = '{{ disqus_url }}';
+    this.page.title = '{{ disqus_title }}';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://{{ disqus_short }}.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>
+    Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript">
+        comments powered by Disqus.
+    </a>
+</noscript>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+{% endblock extra-script %}
+</body>
+</html>

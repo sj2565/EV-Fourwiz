@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}electric vehicle{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/Nav.css'%}">
+    <link rel="stylesheet" href="{% static 'css/blog_detail.css'%}">
+
+    {% block extra-style %}
+    <style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: 'lato';
+        list-style: none;
+        text-decoration: none;
+    }
+
+     body{
+        background:radial-gradient(200% 100% at bottom center,#F7F7B6,#E96F92,#75517D,#1B2947);
+        background:radial-gradient(220% 105% at top center,#1B2947 10%,#75517D 40%,#E96F92 65%,#F7F7B6);
+        background-attachment:fixed;
+    }
+
+    .blog {
+            margin-top : 200px;
+            max-width: 1900px;
+            max-height: 1500px;
+            position: fixed;
+    }
+
+    .wrapper{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+    }
+
+    .wrapper-inverse {
+        margin-top : 200px;
+        position: -webkit-sticky;
+        position: sticky;
+        width:250px;
+    }
+
+    .mainMenu{
+        width: 250px;
+        display: inline-grid;
+        border-radius: 10px;
+
+    }
+    </style>
+    {% endblock %}
+</head>
+
+<!-- 헤더 부분 -->
+{% block header %}
+<header>
+    <div class="blog-part right-blog">
+  <marquee width="100%" direction="left">
+   <span color="white">aaaa</span>
+
+  </marquee>
+  </div>
+</header>
+{% endblock %}
+
+<body>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+
+    <meta name="viewport" content="width=device-width,
+        initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+        #map_e7675d21a3ff4a639c46ed32c27cded2 {
+            position: relative;
+            width: 20%;
+            height: 20%;
+            left: 20%;
+            top: 20%;
+        }
+    </style>
+
+</head>
+<body>
+{% block content %}
+<div class="container" style="margin-left=250; margin-top:20px;">
+  <!-- code here -->
+  <div class="card">
+        <div class="card-map" id="map_e7675d21a3ff4a639c46ed32c27cded2" style="margin-top:10px"></div>
+        <div>
+            <h2 class="card-title" style="margin-left:100px">{{object.area}}</h2>
+            <p class="card-body" style="margin-left:100px">
+                <p class="card-intro" style="margin-left:100px; margin-right:100px">
+                    설치지점 : {{object.area}}
+                    <br>
+                    설치주소 : {{object.address}}
+                    <br>
+                    지원차종 : {{object.spCar}}
+                    <br>
+                    급속충전 : {{object.spCharger}}대
+                    <br>
+                    완속충전 : {{object.charger}}대
+                </p>
+            </p>
+        </div>
+
+      <script>
+          var preUrl = document.referrer;
+      </script>
+      <a href="{% url 'blog:map_all'%}" style="margin-left:50px; margin-bottom:10px; color:#75517D">뒤로가기</a>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+<footer>
+  <p>
+    Created with <i class="fa fa-heart"></i> by
+    <a>4조</a>
+    Follow me :)
+  </p>
+</footer>
+{% endblock %}
+
+<div class="youtubeBtn">
+  <a target="_blank" href="https://www.youtube.com/">
+      <span>Watch on YouTube</span>
+        <i class="fab fa-youtube"></i>
+  </a>
+</div>
+
+{% block extra-script %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+{% endblock %}
+</body>
+
+<div id="disqus_thread" style="margin-left:20%; margin-right:20%"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://hohoho-6.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script>
+
+            var map_e7675d21a3ff4a639c46ed32c27cded2 = L.map(
+                "map_e7675d21a3ff4a639c46ed32c27cded2",
+                {
+                    center: [{{object.lat}}, {{object.lng}}], {# 위도 경도 #}
+                    crs: L.CRS.EPSG3857,
+                    zoom: 16,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+
+
+            var tile_layer_8d49087573a14ad7bf6c0c7b99e3969d = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e7675d21a3ff4a639c46ed32c27cded2);
+
+
+            var marker_ce78a78b7f3447fe8ebcc60e95a9eb4c = L.marker(
+                [{{object.lat}}, {{object.lng}}], {# 위도 경도 #}
+                {}
+            ).addTo(map_e7675d21a3ff4a639c46ed32c27cded2);
+
+
+            var icon_d8df2bc68a834fe69525a5f82f22e85c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_ce78a78b7f3447fe8ebcc60e95a9eb4c.setIcon(icon_d8df2bc68a834fe69525a5f82f22e85c);
+
+
+        var popup_509bccf2aa83413daf243e91464cd241 = L.popup({"maxWidth": "100%"});
+
+
+            var html_9a7880f29e17461cb1f4670e25afb720 = $(`<div id="html_9a7880f29e17461cb1f4670e25afb720" style="width: 100.0%; height: 100.0%;">{{object.area}}</div>`)[0];
+            popup_509bccf2aa83413daf243e91464cd241.setContent(html_9a7880f29e17461cb1f4670e25afb720);
+
+
+        marker_ce78a78b7f3447fe8ebcc60e95a9eb4c.bindPopup(popup_509bccf2aa83413daf243e91464cd241)
+        ;
+
+
+
+
+            var circle_marker_3af3dd2535904804b34d54d6132b92e7 = L.circleMarker(
+                [{{object.lat}}, {{object.lng}}], {# 위도 경도 #}
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 50, "stroke": true, "weight": 3}
+            ).addTo(map_e7675d21a3ff4a639c46ed32c27cded2);
+
+
+        var popup_402fcced5d444c5e83e369b07945bf39 = L.popup({"maxWidth": "100%"});
+
+
+            var html_de536ab10c664c109d6197d151a3b74a = $(`<div id="html_de536ab10c664c109d6197d151a3b74a" style="width: 100.0%; height: 100.0%;">{{object.area}}</div>`)[0];
+            popup_402fcced5d444c5e83e369b07945bf39.setContent(html_de536ab10c664c109d6197d151a3b74a);
+
+        circle_marker_3af3dd2535904804b34d54d6132b92e7.bindPopup(popup_402fcced5d444c5e83e369b07945bf39);
+</script>
+</body>
+</html>

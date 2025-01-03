@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}electric vehicle{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+    html{
+      margin-top: 100px;
+      background:radial-gradient(200% 100% at bottom center,#F7F7B6,#E96F92,#75517D,#1B2947);
+      background:radial-gradient(220% 105% at top center,#1B2947 10%,#75517D 40%,#E96F92 65%,#F7F7B6);
+      background-attachment:fixed;
+      background-size:cover;
+    }
+    .container{
+      margin:100px;
+       margin-left:0px;
+      width:100%;
+      max-width:3000px;
+      position:relative;
+      font-family:Sans-serif;
+
+    }
+
+    </style>
+
+    {% block extra-style %}{% endblock %}
+</head>
+
+<body>
+<div class="html"></div>
+    {# 메인 화면에 보여지는 네비게이션 #}
+
+<nav class="navbar-inverse navbar-default bg-default fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="text-white">
+        <form class="form-inline my-2 " action="{% url 'blog:search' %}" method="post"><i class="fas fa-power-off"></i>&ensp; {% csrf_token %}&ensp;
+            <input class="form-control mr-sm-2" type="search" placeholder="Charging station" name="search_word">
+        </form>
+    </ul>
+
+    <ul class="text-white">
+         <li class="nav-item mx-1 btn btn-default">
+            <a class="nav-link text-white" href="{% url 'home' %}">
+                <i class="fas fa-home"></i>&ensp;Home&ensp;
+            </a>
+         </li>
+    </ul>
+
+    <ul class="text-white">
+         <li class="nav-item mx-1 btn btn-default">
+            <a class="nav-link text-white" href="{% url 'blog:index' %}">
+                <i class="fas fa-map-marked"></i>&ensp;Charging station&ensp;
+            </a>
+         </li>
+    </ul>
+
+    <ul class="text-white">
+         <li class="nav-item mx-1 btn btn-default">
+            <a class="nav-link text-white" href="{% url 'photo:index' %}">
+                <i class="fas fa-car-side"></i>&ensp;Electric Vehicle INFO&ensp;
+            </a>
+         </li>
+    </ul>
+
+    <ul class="text-white">
+        <li class="element4 dropdown mx-1 btn btn-default">
+        {% if user.is_active %}
+            <a class="element4-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+            &ensp;&ensp;<i class="fas fa-id-card-alt"></i>&ensp;{% firstof user.get_short_name user.get_username %}&ensp;</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-power-off"></i>&ensp;Logout&ensp;</a>
+                <a class="dropdown-item" href="{% url 'password_change' %}"><i class="fas fa-user-edit"></i>&ensp;Change Password&ensp;</a>
+            </div>
+        {% else %}
+            <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+            <i class="fas fa-id-card-alt"></i>&ensp;Anonymous&ensp;</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'login' %}"><i class="fas fa-smile"></i>&ensp;Login&ensp;</a>
+                <a class="dropdown-item" href="{% url 'register' %}"><i class="fas fa-user-plus"></i>&ensp;Register&ensp;</a>
+            </div>
+        {% endif %}
+        </li>
+    </ul>
+</nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    {% block footer %}{% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+
+    {% block extra-script %}{% endblock %}
+
+</body>
+</html>

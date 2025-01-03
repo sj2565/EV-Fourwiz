@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for thumb in thumb.all %}
+    <img src="{{thumb.image.url}}" width="400">
+    <p>이야</p>
+    <img src="{{thumb.image_thumbnail.url}}" alt="액박">
+    <img src="{{ photo.image.thumb_url }}" style="width: 100%;">
+{% endfor %}
+
+
+</body>
+</html>

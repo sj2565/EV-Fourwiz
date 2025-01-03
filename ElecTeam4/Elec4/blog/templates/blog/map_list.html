@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+<h2>목록</h2>
+<br>
+    <table class="table table-striped">
+        <tbody>
+        {% for CarCharger in maps %} {# views.py와 연동 #}
+        <tr>
+            <td> <a href="{{CarCharger.get_absolute_url}}">{{CarCharger.area}}</a></td>
+            <td> {{CarCharger.address}} </td>
+            <td> {{CarCharger.spCharger}} </td>
+            <td> {{CarCharger.charger}} </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+
+</body>
+</html>

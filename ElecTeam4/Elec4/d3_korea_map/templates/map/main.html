@@ -1,0 +1,34 @@
+{% load static  %}
+
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>korea</title>
+
+
+    <link rel="stylesheet" href="{% static 'map/stylesheet/map.css' %}">
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="{% static 'map/script/map.js' %}"></script>
+
+    <script>
+        var KOREA_JSON_DATA_URL = "{% static 'map/province.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'map/testSpots.json' %}"
+
+        function initialize(){
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function(_data){
+                d3_korea_map('#map', _data);
+            })
+        }
+    </script>
+
+</head>
+
+<body onload="initialize()">
+    <div id="map"></div>
+</body>
+
+</html>

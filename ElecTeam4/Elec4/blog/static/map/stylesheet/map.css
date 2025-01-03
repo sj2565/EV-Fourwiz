@@ -1,0 +1,51 @@
+path{
+    fill: lightgrey;
+    stroke: white;
+    stroke-width: 1.5px;
+}
+
+path:hover{
+    fill: #6d549c;
+}
+
+#map .visited{
+    fill: #72E8ED;
+}
+
+#map .active{
+    fill: #ffedad;
+}
+
+#map{
+    position: absolute;
+    top:200;
+    left: 10px;
+    padding-bottom:10px;
+    height:50px;
+}
+
+#svg{
+    position: absolute;
+    top: -200px;
+    left: -420px;
+
+}
+
+#g{
+    position: absolute;
+    width:120px;
+    height: 800px;
+
+}
+
+.absolute {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width:800px;
+    height: 100px;
+}
+
+.page-link{
+    color:#6d549c;
+}

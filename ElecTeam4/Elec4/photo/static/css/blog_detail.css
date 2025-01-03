@@ -1,0 +1,67 @@
+.absolute {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width:800px;
+    height: 100px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 700px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  max-width: 50%;
+  background-color: #FFF;
+  box-shadow: 0 5px 10px 0 rgba(#000, .15);
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 5rem;
+  margin-left:25%;
+}
+
+.card-map {
+  padding-bottom:50%;
+  padding-right:60%;
+  position: relative;
+  map_e7675d21a3ff4a639c46ed32c27cded2 {
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    left: 0;
+    top: 20%;
+  }
+}
+
+.card-body {
+  padding: 1.5rem;
+  left: 50px;
+}
+
+.card-title {
+  font-size: 3rem;
+  left: 50px;
+  line-height: 1.33;
+  font-weight: 700;
+
+}
+
+.card-intro {
+  margin-top: .75rem;
+  line-height: 1.5;
+  font-size: 16px;
+
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

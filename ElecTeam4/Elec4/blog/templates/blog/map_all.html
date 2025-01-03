@@ -1,0 +1,244 @@
+{% load bootstrap4 %}
+<html lang="ko">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}electric vehicle{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/blog_Nav.css'%}">
+
+    <!-- 지우지 x -->
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    {% bootstrap_css %}
+    {% bootstrap_jquery %}
+    {% bootstrap_javascript %}
+
+    <link rel="stylesheet" href="{% static 'map/stylesheet/map.css' %}">
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="{% static 'map/script/map.js' %}"></script>
+
+    <script>
+        var KOREA_JSON_DATA_URL = "{% static 'map/province.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'map/testSpots.json' %}"
+
+        function initialize(){
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function(_data){
+                d3_korea_map('#map', _data);
+            })
+        }
+    </script>
+    <!-- 지우지 x -->
+    {% block extra-style %}
+    <style type="text/css">
+    .wrapper-inverse {
+        margin-top : 200px;
+        position: -webkit-sticky;
+        position: sticky;
+        width:250px;
+    }
+    body{
+        background:radial-gradient(200% 100% at bottom center,#F7F7B6,#E96F92,#75517D,#1B2947);
+        background:radial-gradient(220% 105% at top center,#1B2947 10%,#75517D 40%,#E96F92 65%,#F7F7B6);
+        background-attachment:fixed;
+    }
+
+
+    .pagination > .active > a
+    {
+        color: white;
+        background-color: #6d549c !Important;
+        border: solid 1px #6d549c !Important;
+    }
+
+    .pagination > .active > a:hover
+    {
+        background-color: #6d549c !Important;
+        border: solid 1px #6d549c;
+    }
+
+
+    </style>
+    {% endblock %}
+</head>
+
+<!-- 헤더 부분 -->
+{% block header %}
+<header>
+    <div class="blog-part right-blog">
+  <marquee width="100%" direction="left">
+   <span color="white">aaaa</span>
+
+  </marquee>
+  </div>
+</header>
+{% endblock %}
+
+<body>
+
+<div>
+    <div id="map" ></div>
+</div>
+<div class="body">
+    <div class="blog">
+        <div class="wrapper-inverse">
+            <div style="margin-top:100%; padding-right:300px">
+                <ui class="mainMenu">
+                    <li class="item" id="main">
+                         <a href="" class="btn" style="font-weight:bold; font-size:22px;"><h4 style="font-weight:bold; color:#75517D;">&ensp;&ensp;&ensp;Electric car</h4></a>
+                        <div class="subMenu">
+                        </div>
+                    </li>
+                    <li class="item" id="main2">
+                        <a href="" class="btn" style="color:#75517D">&ensp;&ensp;</a>
+                        <div class="subMenu">
+                        </div>
+                    </li>
+                    <li class="item" id="home">
+                        <a href="{% url 'home' %}" class="btn" style="color:#75517D;"><i class="fas fa-home"></i>&ensp;Home&ensp;</a>
+                        <div class="subMenu">
+                        </div>
+                    </li>
+                    <li class="item" id="charging">
+                        <a href="#charging" class="btn" style="color:#75517D;"><i class="fas fa-map-marked"></i>&ensp;EV Charging&ensp;</a>
+                        <div class="subMenu">
+                            <a href="{% url 'blog:index' %}">Charging Station INFO</a>
+                        </div>
+                    </li>
+                    <li class="item" id="ev">
+                        <a href="#ev" class="btn" style="color:#75517D;"><i class="fas fa-car-side"></i>&ensp;EV INFO&ensp;</a>
+                        <div class="subMenu">
+                            <a href="{% url 'photo:index' %}">EV Manufacturer List</a>
+                        </div>
+                    </li>
+
+                    <li class="item" id="account">
+                    {% if user.is_active %}
+                        <a href="#account" class="btn" style="color:#75517D;"><i class="fas fa-user"></i>&ensp;&ensp;{% firstof user.get_short_name user.get_username %}&ensp;</a>
+                        <div class="subMenu">
+                            <a href="{% url 'logout' %}">Logout</a>
+                            <a href="{% url 'password_change' %}">Change Password</a>
+                        </div>
+                    {% else %}
+                        <a href="#account" class="btn" style="color:#75517D;"><i class="fas fa-user"></i>&ensp;&ensp;Visitor&ensp;</a>
+                        <div class="subMenu">
+                            <a href="{% url 'login' %}">Login</a>
+                            <a href="{% url 'register' %}">Join</a>
+                        </div>
+                    {% endif %}
+                    </li>
+                    <li class="item">
+                        <a href="#" class="btn"></a>
+                    </li>
+                </ui>
+            </div>
+        </div>
+    </div>
+</div>
+{% block content %}
+            <div class="absolute">
+                <div id="blogS">
+                    <form action="{% url 'blog:map_all' %}" method="get" class="form-inline">
+                        <input type="text" class="form-control mr-2" name="q" value="{{ request.GET.q }}" />
+                        <input type="submit" value="검색" class="btn btn-light" style="color:#6d549c;font-weight:bold"/>
+                    </form>
+                    <table class="table table-striped" style="text-align:center; border-radius:10px; color:#6d549c; font-family: 'lato';" bgcolor="white">
+                        <thead>
+                            <tr>
+                                <th>설치지점</th>
+                                <th>설치주소</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if object_list %}
+                                {% for CarCharger in object_list %}
+                                <tr>
+                                    <td> <a href="{{CarCharger.get_absolute_url}}" style="color:#75517D; font-weight:bold">{{CarCharger.area}}</a></td>
+                                    <td> {{CarCharger.address}} </td>
+                                </tr>
+                                    <p>{{CarCharger.description}}</p>
+                                {% endfor %}
+                            {% elif search_term %}
+                                <b><i>Search Word({{ search_term }}) Not Found !</i></b>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <!-- 이전페이지 -->
+                    {% if page_obj.has_previous %}
+                    <li class="page-item" >
+                        <a class="page-link" data-page="{{ page_obj.previous_page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.previous_page_number}}{{ page_number }}" style="color:#6d549c; font-weight:bold">이전</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                    </li>
+                    {% endif %}
+                    <!-- 페이지리스트 -->
+                    {% for page_number in page_obj.paginator.page_range %}
+                    {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %}
+                        {% if page_number == page_obj.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" data-page="{{ page_obj.page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.page_number}}{{ page_number }}">{{ page_number }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" data-page="{{ page_obj.page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.page_number}}{{ page_number }}">{{ page_number }}</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    <!-- 다음페이지 -->
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" data-page="{{ page_obj.next_page_number }}" href="?q={{ request.GET.q }}&page={{page_obj.next_page_number}}{{ page_number }}" style="color:#6d549c; font-weight:bold">다음</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+                </div>
+            </div>
+<!--        </div>-->
+    {% endblock %}
+<!-- 하단 부분 -->
+{% block footer %}
+<footer>
+  <p>
+    Created with <i class="fa fa-heart"></i> by
+    <a>4조</a>
+    Follow me :)
+  </p>
+</footer>
+{% endblock %}
+
+<div class="youtubeBtn">
+  <a target="_blank" href="https://www.youtube.com/">
+      <span>Watch on YouTube</span>
+        <i class="fab fa-youtube"></i>
+  </a>
+</div>
+
+{% block extra-script %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+{% endblock %}
+
+</body>
+<body onload="initialize()">
+    <div id="map"></div>
+</body>
+
+</html>

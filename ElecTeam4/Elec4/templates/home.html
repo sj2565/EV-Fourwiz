@@ -1,0 +1,259 @@
+
+<html>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/Home.css'%}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<head>
+    {% block extra-style %}
+    <style type="text/css">
+        body,
+        html {
+          margin-top: 100px;
+          background:radial-gradient(200% 100% at bottom center,#F7F7B6,#E96F92,#75517D,#1B2947);
+          background:radial-gradient(220% 105% at top center,#1B2947 10%,#75517D 40%,#E96F92 65%,#F7F7B6);
+          background-attachment:fixed;
+          overflow:hidden;
+        }
+
+        .wrapper {
+          width: 105%;
+          perspective: 800;
+        }
+
+        .cube {
+          position: relative;
+          top: 160px;
+          margin: 0 auto;
+          height: 200px;
+          width: 200px;
+
+          animation : spin 7s infinite linear;
+          transform-style: preserve-3d;
+        }
+
+        @keyframes spin {
+          from { transform: rotateY(0) rotateX(0); }
+          to   { transform: rotateY(-360deg) rotateX(360deg); }
+        }
+
+        .cube > div {
+          position: absolute;
+          height: 300px;
+          width: 300px;
+          border: 2px solid #333;
+          opacity: .7;
+        }
+
+        .cube > div:hover {
+          opacity: 1;
+          transition: opacity .3s linear;
+        }
+
+        /*MediumPurple*/
+        .one {
+          transform: rotateX(90deg) translateZ(150px);
+          background-color: #9370DB;
+        }
+
+        .one-image{
+           margin-top: 36px;
+           background-image: url("{% static 'img/caricon.png' %}");
+           background-repeat: no-repeat;
+           background-position: center;
+           /*background-size: cover; */
+           padding: 20px 0 0 20px;
+           height : 200px;
+           background-size: 100%;
+        }
+
+        /* 꽃분홍색 FF80AB*/
+        .two {
+          transform: translateZ(150px);
+          background-color: #FF80AB;
+        }
+
+         .two-image{
+           margin-top: 28px;
+           margin-left : 29px;
+           background-image: url("{% static 'img/mapicon.png' %}");
+           background-repeat: no-repeat;
+           /*background-size: cover; */
+           padding: 5px 0 0 5px;
+           height : 350px;
+           width : 350px;
+           background-size: 60%;
+        }
+
+        /*연보라 E1BEE7*/
+        .three {
+          transform: rotateY(90deg) translateZ(150px);
+          background-color: #E1BEE7;
+        }
+
+         .three-image{
+           margin-top: 25px;
+           margin-left : 32px;
+           background-image: url("{% static 'img/charging.png' %}");
+           background-repeat: no-repeat;
+           /*background-size: cover; */
+           padding: 5px 0 0 5px;
+           height : 350px;
+           width : 350px;
+           background-size: 60%;
+        }
+
+        /*안보이는 부분 B2DFDB*/
+        .four {
+          transform: rotateY(180deg) translateZ(150px);
+          background-color: #B2DFDB;
+        }
+
+        /*연한 코랄 EF9A9A*/
+        .five {
+          transform: rotateY(-90deg) translateZ(150px);
+          background-color: #EF9A9A;
+        }
+
+         .five-image{
+           margin-top: 30px;
+           margin-left : 32px;
+           background-image: url("{% static 'img/certificate.png' %}");
+           background-repeat: no-repeat;
+           /*background-size: cover; */
+           padding: 5px 0 0 5px;
+           height : 350px;
+           width : 350px;
+           background-size: 60%;
+        }
+
+        /*DarkSlateBlue*/
+        .six {
+          transform: rotateX(-90deg) translateZ(150px);
+          background-color: #483D8B;
+        }
+
+         .six-image{
+           margin-top: 30px;
+           margin-left : 32px;
+           background-image: url("{% static 'img/graphicon.png' %}");
+           background-repeat: no-repeat;
+           /*background-size: cover; */
+           padding: 5px 0 0 5px;
+           height : 350px;
+           width : 350px;
+           background-size: 60%;
+        }
+
+
+
+        footer {
+          background-color: #222;
+          color: #fff;
+          font-size: 14px;
+          bottom: 0;
+          position: fixed;
+          left: 0;
+          right: 0;
+          text-align: center;
+          z-index: 999;
+        }
+
+        footer p {
+          margin: 10px 0;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida  Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        footer .fa-heart {
+          color: red;
+        }
+
+        footer .fa-dev {
+          color: #fff;
+        }
+
+        footer .fa-twitter-square{
+          color:#1da0f1;
+        }
+
+        footer .fa-instagram{
+          color: #f0007c;
+        }
+
+        footer .fa-linkedin{
+          color:#0073b1;
+        }
+
+        footer .fa-codepen{
+          color:#fff
+        }
+
+        footer a {
+          color: #3c97bf;
+          text-decoration: none;
+          margin-right:5px;
+        }
+    }
+    </style>
+    {% endblock %}
+</head>
+
+{% block content %}
+<body>
+    <div class="wrapper">
+        <div class="cube">
+            <div class="one"> <!-- 자동차, 제품게시판 -->
+                <a class="nav-link text-white" href="{% url 'photo:index' %}">
+<!--                    <img src="D:\mypython\kosmo_\django\ElecTeam4\Elec4\photo\static\img\caricon.png" alt="액박이다">-->
+                    <div class="one-image"></div>
+                </a>
+            </div>
+
+            <div class="two"> <!-- 지도, 충전게시판 -->
+                 <a class="nav-link text-white" href="{% url 'blog:index' %}">
+                     <div class="two-image"></div>
+                 </a>
+            </div>
+
+            <div class="three"> <!-- 충전기, 충전게시판 -->
+                 <a class="nav-link text-white" href="{% url 'blog:index' %}">
+                     <div class="three-image"></div>
+                </a>
+            </div>
+
+            <div class="four"></div> <!-- 안 보이는 부분-->
+
+            <div class="five"> <!-- 개인정보, 클릭 안 됨-->
+<!--                <a class="nav-link text-white" href="{% url 'photo:index' %}">-->
+                     <div class="five-image"></div>
+<!--                </a>-->
+            </div>
+            <div class="six"> <!-- 그래프,클릭 안 됨-->
+<!--                <a class="nav-link text-white" href="{% url 'photo:index' %}">-->
+                     <div class="six-image"></div>
+<!--                </a>-->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+<footer>
+  <p>
+    Created with <i class="fa fa-heart"></i> by
+    <a>4조</a>
+    Follow me :)
+  </p>
+</footer>
+{% endblock %}
+
+{% block extra-script %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+{% endblock %}
+
+</body>
+</html>

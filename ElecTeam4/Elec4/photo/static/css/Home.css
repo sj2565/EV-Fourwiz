@@ -1,0 +1,80 @@
+body,
+html {
+  margin-top: 100px;
+  background:radial-gradient(200% 100% at bottom center,#F7F7B6,#E96F92,#75517D,#1B2947);
+  background:radial-gradient(220% 105% at top center,#1B2947 10%,#75517D 40%,#E96F92 65%,#F7F7B6);
+  background-attachment:fixed;
+  overflow:hidden;
+
+}
+
+.wrapper {
+  width: 105%;
+  perspective: 800;
+}
+
+.cube {
+  position: relative;
+  top: 160px;
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+
+  animation : spin 7s infinite linear;
+  transform-style: preserve-3d;
+}
+
+@keyframes spin {
+  from { transform: rotateY(0) rotateX(0); }
+  to   { transform: rotateY(-360deg) rotateX(360deg); }
+}
+
+.cube > div {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  border: 2px solid #333;
+  opacity: .7;
+}
+
+.cube > div:hover {
+  opacity: 1;
+  transition: opacity .3s linear;
+}
+/*MediumPurple*/
+.one { 
+  transform: rotateX(90deg) translateZ(150px);
+  background-color: #9370DB;
+}
+/* 꽃분홍색 FF80AB*/
+.two { 
+  transform: translateZ(150px);
+  background-color: #FF80AB;
+}
+/*연보라 E1BEE7*/
+.three { 
+  transform: rotateY(90deg) translateZ(150px);
+  background-color: #E1BEE7;
+}
+/*안보이는 부분 B2DFDB*/
+.four { 
+  transform: rotateY(180deg) translateZ(150px);
+  background-color: #B2DFDB;
+}
+/*연한 코랄 EF9A9A*/
+.five { 
+  transform: rotateY(-90deg) translateZ(150px);
+  background-color: #EF9A9A;
+}
+/*DarkSlateBlue*/
+.six { 
+  transform: rotateX(-90deg) translateZ(150px);
+  background-color: #483D8B;
+}
+
+.footer {
+   margin-left: 100px;
+   bottom : fixed-bottom bg-dark
+   text-white font-italic text-right mr-5
+
+}
